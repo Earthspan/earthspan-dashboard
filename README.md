@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏟️ Earthspan Protocol: The Sovereign Engine
 
-## Getting Started
+### **Institutional Environmental RWA Gateway**
+> **Earthspan digitizes physical land recovery into "Impact Metres," creating a high-yield, transparent asset class ($UPRA) on Solana.**
 
-First, run the development server:
+| Status | Track | Jurisdiction | Compliance |
+| :--- | :--- | :--- | :--- |
+| **Active** | **Real World Assets (RWA)** | **UK / Global** | **FCA 2026 Gateway Prep** |
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏛️ Executive Summary
+Earthspan bridges the gap between "Dead Capital" in physical land registries and global liquidity. Utilizing **Solana Token Extensions (Token-2022)**, we tokenize land tranches into programmable securities.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛡️ Regulatory Roadmap (FCA Sept 2026)
+We are architected for the **September 30, 2026** FCA Authorisation Gateway.
+* **SICs Classification:** Land tranches are managed as Specified Investment Cryptoassets.
+* **Transitional Status:** Earthspan is preparing for the DSS (Digital Securities Sandbox) to test on-chain land title transfers.
+* **Compliance:** Utilizing **Permanent Delegate** and **Transfer Hook** extensions to enforce KYC/AML at the protocol level.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🗺️ The Digital Twin Framework
+Every **$UPRA** token represents an "Impact Metre"—a cryptographically verified plot of land.
+* **Legal Wrapper:** Assets are held via **Special Purpose Vehicles (SPVs)** ensuring a direct legal claim for token holders.
+* **Verification:** Real-time ecological status is anchored via satellite telemetry and on-chain Proof-of-Work.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🏗️ Technical Stack
+* **L1:** Solana Mainnet-Beta
+* **Standard:** Token-2022 (Transfer Fees enabled)
+* **Governance:** Squads Multisig (Anti-Key Man Risk)
+* **Dashboard:** [earthspan-dashboard.vercel.app](https://earthspan-dashboard.vercel.app)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Earthspan Protocol © 2026 • Sovereign Environmental Finance*
