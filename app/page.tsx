@@ -9,38 +9,7 @@ export default function EarthspanDashboard() {
   const { connection } = useConnection();
   const { publicKey } = useWallet();
   const [balance, setBalance] = useState<number | null>(null);
-  const [prices, setPrices] = useState({ sol: 0, eur: 0.93, gbp: 0.79, jpy: 155.20 });
   const [investment, setInvestment] = useState(25000);
-
-  // Fetch Real Solana Balance
-  useEffect(() => {
-    if (!publicKey) {
-      setBalance(null);
-      return;
-    }
-    const updateBalance = async () => {
-      const info = await connection.getAccountInfo(publicKey);
-      if (info) setBalance(info.lamports / LAMPORTS_PER_SOL);
-    };
-    updateBalance();
-    const id = connection.onAccountChange(publicKey, (info) => setBalance(info.lamports / LAMPORTS_PER_SOL));
-    return () => { connection.removeAccountChangeListener(id); };
-  }, [publicKey, connection]);
-
-  // Simulated Price Feed for Major Pairs
-  useEffect(() => {
-    const fetchPrices = () => {
-      setPrices({
-        sol: 145 + Math.random() * 5,
-        eur: 0.92 + Math.random() * 0.02,
-        gbp: 0.78 + Math.random() * 0.02,
-        jpy: 155 + Math.random() * 0.5
-      });
-    };
-    fetchPrices();
-    const interval = setInterval(fetchPrices, 10000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#f4f7f5] text-slate-900 font-sans selection:bg-green-100">
@@ -51,6 +20,7 @@ export default function EarthspanDashboard() {
         .animate-marquee { display: flex; animation: marquee 40s linear infinite; }
       `}</style>
 
+      {/* Institutional Nav */}
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex justify-between items-center px-8 py-3">
           <div className="flex items-center gap-4">
@@ -60,75 +30,67 @@ export default function EarthspanDashboard() {
               <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.4em]">Sovereign Engine</span>
             </div>
           </div>
-          <WalletMultiButton />
+          <div className="hidden lg:flex gap-6">
+            <div className="flex items-center gap-2 px-3 py-1 bg-amber-50 rounded border border-amber-100">
+              <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
+              <span className="text-[9px] font-black text-amber-700 uppercase">FCA Sept Gateway Prep</span>
+            </div>
+            <WalletMultiButton />
+          </div>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto p-8">
-        {/* Global Currency & Assets Ticker */}
-        <div className="bg-slate-900 text-white/70 py-2.5 px-6 rounded-md mb-12 overflow-hidden text-[10px] font-bold tracking-[0.15em] uppercase flex border-b border-emerald-500/30 shadow-lg">
-          <div className="animate-marquee whitespace-nowrap gap-16">
-            <span className="text-emerald-400">SOL/USD ${prices.sol.toFixed(2)}</span>
-            <span>USD/EUR {prices.eur.toFixed(4)}</span>
-            <span>USD/GBP {prices.gbp.toFixed(4)}</span>
-            <span>USD/JPY {prices.jpy.toFixed(2)}</span>
-            <span className="text-emerald-400">ENGINE STATUS: OPTIMAL</span>
-            <span>NETWORK: SOLANA MAINNET</span>
-            <span className="text-emerald-400">SOL/USD ${prices.sol.toFixed(2)}</span>
-            <span>USD/EUR {prices.eur.toFixed(4)}</span>
-          </div>
-        </div>
-
+      <main className="max-w-7xl mx-auto p-8 lg:p-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Marketplace */}
-          <div className="lg:col-span-8">
-            <h2 className="text-2xl font-black text-slate-800 mb-8">Sovereign Marketplace</h2>
-            <div className="space-y-3">
-              {[
-                { name: "Global Infrastructure Bond", yield: "6.2%", rating: "AA" },
-                { name: "Renewable Energy Series B", yield: "5.8%", rating: "A+" },
-                { name: "Treasury Yield Strategy", yield: "7.1%", rating: "BBB+" }
-              ].map((asset, i) => (
-                <div key={i} className="bg-white p-6 border border-slate-200 rounded flex justify-between items-center group hover:border-[#1a4d2e] transition-all">
-                  <div className="flex items-center gap-6">
-                    <div className="text-[10px] font-black text-slate-300 rotate-90 tracking-tighter">{asset.rating}</div>
-                    <h3 className="font-bold text-slate-800">{asset.name}</h3>
-                  </div>
-                  <div className="flex items-center gap-8">
-                    <div className="text-right">
-                      <p className="text-[9px] font-bold text-slate-400 uppercase">Annual Yield</p>
-                      <p className="text-xl font-black text-[#1a4d2e]">{asset.yield}</p>
+          {/* Main Content */}
+          <div className="lg:col-span-8 space-y-12">
+            <section id="marketplace">
+              <h2 className="text-3xl font-black text-slate-800 mb-2">Sovereign Land Tranches</h2>
+              <p className="text-slate-400 mb-8 font-medium">Underlying Asset: SPV-Held Agricultural & Recovery Titles</p>
+              
+              <div className="space-y-4">
+                {[
+                  { name: "Amazon Basin Tranche A1", yield: "6.2%", rating: "AA", area: "450 ha" },
+                  { name: "Sub-Saharan Green Belt", yield: "7.4%", rating: "A-", area: "1,200 ha" }
+                ].map((asset, i) => (
+                  <div key={i} className="bg-white p-8 border border-slate-200 rounded-xl flex justify-between items-center group hover:border-[#1a4d2e] transition-all shadow-sm">
+                    <div>
+                      <span className="text-[10px] font-bold text-[#1a4d2e] uppercase tracking-widest bg-green-50 px-2 py-0.5 rounded">Verified Digital Twin</span>
+                      <h3 className="font-bold text-slate-800 text-xl mt-2">{asset.name}</h3>
+                      <p className="text-xs text-slate-400 mt-1">Area: {asset.area} • GPS-Anchored • Token2022 Verified</p>
                     </div>
-                    <button className="bg-[#1a4d2e] text-white px-6 py-2 rounded font-bold text-[11px] uppercase tracking-widest hover:bg-black">Execute</button>
+                    <button className="bg-[#1a4d2e] text-white px-8 py-3 rounded font-black text-xs uppercase tracking-widest hover:bg-black">Execute {asset.yield}</button>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </section>
           </div>
 
-          {/* Sidebar */}
+          {/* Institutional Sidebar */}
           <div className="lg:col-span-4 space-y-8">
-            <div className="bg-white border-t-4 border-[#1a4d2e] p-8 rounded shadow-sm">
-              <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">On-Chain Portfolio</h3>
-              <p className="text-4xl font-black text-slate-800">
-                {balance !== null ? `${balance.toFixed(2)} SOL` : "$0.00"}
-              </p>
-              <p className="text-[10px] text-slate-400 font-bold uppercase mt-1">
-                {balance !== null ? `≈ $${(balance * prices.sol).toLocaleString()}` : "No Wallet Connected"}
-              </p>
+            <div className="bg-slate-900 p-8 rounded-2xl text-white shadow-2xl">
+              <h3 className="text-[10px] font-bold uppercase tracking-widest opacity-50 mb-6">Legal Data Room</h3>
+              <div className="space-y-4">
+                {['SPV Incorporation Docs', 'Land Title Registry (Hash)', 'Regulatory Roadmap'].map((doc) => (
+                  <div key={doc} className="flex justify-between items-center text-xs border-b border-white/10 pb-3 cursor-pointer hover:text-emerald-400 transition-colors">
+                    <span>{doc}</span>
+                    <span className="text-[9px] opacity-40">PDF / VIEW</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="bg-[#1a4d2e] p-8 rounded text-white shadow-xl">
-              <h3 className="text-[10px] font-bold uppercase tracking-widest opacity-50 mb-6">Yield Projector</h3>
-              <input type="range" min="1000" max="100000" step="5000" value={investment} onChange={(e) => setInvestment(Number(e.target.value))} className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer mb-6" />
-              <div className="flex justify-between items-end">
+            <div className="bg-white border border-slate-200 p-8 rounded-2xl">
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4">Investment Projection</h3>
+              <input type="range" min="5000" max="250000" step="5000" value={investment} onChange={(e) => setInvestment(Number(e.target.value))} className="w-full mb-6 accent-[#1a4d2e]" />
+              <div className="flex justify-between">
                 <div>
-                  <p className="text-[9px] font-bold uppercase opacity-50">Invested</p>
-                  <p className="text-lg font-bold">${investment.toLocaleString()}</p>
+                  <p className="text-[10px] opacity-50 uppercase font-bold">Principal</p>
+                  <p className="text-xl font-bold">${investment.toLocaleString()}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[9px] font-bold uppercase opacity-50">Est. 5Y Return</p>
-                  <p className="text-2xl font-black text-emerald-400">${(investment * 1.34).toLocaleString()}</p>
+                  <p className="text-[10px] opacity-50 uppercase font-bold text-[#1a4d2e]">Est. Sovereign Yield</p>
+                  <p className="text-2xl font-black text-emerald-600 tracking-tighter">${(investment * 1.34).toLocaleString()}</p>
                 </div>
               </div>
             </div>
