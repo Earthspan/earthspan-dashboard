@@ -3,78 +3,109 @@ import Image from 'next/image';
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 export default function EarthspanDashboard() {
-  return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans text-center">
-      
-      <style jsx global>{`
-        /* Header Button */
-        .wallet-adapter-button {
-          background-color: #1a4d2e !important;
-          color: white !important;
-          border-radius: 9999px !important;
-          font-weight: 600 !important;
-          padding: 0 24px !important;
-          transition: all 0.3s ease !important;
-        }
-        .wallet-adapter-button:hover { background-color: #24633d !important; }
-        .wallet-adapter-button-start-icon { display: none !important; }
+  const assets = [
+    { id: 1, name: "Renewable Energy Bond A1", yield: "6.2%", maturity: "2029", rating: "AA" },
+    { id: 2, name: "Global Infrastructure Fund", yield: "5.8%", maturity: "2031", rating: "A+" },
+    { id: 3, name: "Emerging Markets Credit", yield: "7.1%", maturity: "2027", rating: "BBB+" },
+  ];
 
-        /* Institutional Modal Cleanup */
-        .wallet-adapter-modal-wrapper {
-          background: #ffffff !important;
-          border-radius: 32px !important;
-          padding: 20px !important;
-        }
-        .wallet-adapter-modal-title {
-          color: #1a4d2e !important;
-          font-family: inherit !important;
-          font-size: 24px !important;
-          margin-bottom: 20px !important;
-        }
-        .wallet-adapter-modal-list {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 12px !important; /* This creates the separation between buttons */
-        }
-        .wallet-adapter-modal-list .wallet-adapter-button {
-          background-color: #f8fafc !important;
-          color: #1a4d2e !important;
-          border: 1px solid #e2e8f0 !important;
-          border-radius: 16px !important;
-          height: 60px !important;
-          justify-content: space-between !important;
-          font-size: 16px !important;
-        }
-        .wallet-adapter-modal-list .wallet-adapter-button:hover {
-          background-color: #f1f5f9 !important;
-          border-color: #1a4d2e !important;
-        }
-        .wallet-adapter-modal-list .wallet-adapter-button-end-icon {
-          opacity: 0.5 !important;
-        }
+  return (
+    <div className="min-h-screen bg-[#fcfdfc] text-slate-900 font-sans">
+      <style jsx global>{`
+        .wallet-adapter-button { background-color: #1a4d2e !important; border-radius: 9999px !important; }
+        .wallet-adapter-button-start-icon { display: none !important; }
       `}</style>
 
-      <nav className="border-b border-slate-100 p-6 flex justify-between items-center max-w-7xl mx-auto">
-        <Image src="/logo2small.jpg" alt="Logo" width={160} height={50} priority={true} />
-        <WalletMultiButton />
+      {/* Header */}
+      <nav className="bg-white border-b border-slate-100 p-4 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <Image src="/logo2small.jpg" alt="Logo" width={140} height={40} priority />
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex gap-6 text-sm font-medium text-slate-500">
+              <a href="#" className="hover:text-[#1a4d2e]">Marketplace</a>
+              <a href="#" className="hover:text-[#1a4d2e]">Portfolio</a>
+              <a href="#" className="hover:text-[#1a4d2e]">Governance</a>
+            </div>
+            <WalletMultiButton />
+          </div>
+        </div>
       </nav>
-      
-      <main className="max-w-4xl mx-auto mt-24 px-6">
-        <h1 className="text-6xl font-extrabold text-[#1a4d2e] tracking-tight">Sovereign Engine</h1>
-        <p className="text-slate-500 mt-4 text-2xl font-light italic">Institutional Tokenization Gateway</p>
 
-        <div className="mt-16 bg-[#f8fafc] rounded-[3rem] p-20 border border-slate-200/60 shadow-2xl">
-           <div className="mx-auto w-12 h-1 bg-[#1a4d2e] mb-10 opacity-20"></div>
-           <h2 className="text-4xl font-bold text-slate-800">Connection Active</h2>
-           <p className="text-slate-500 mt-6 text-xl max-w-md mx-auto leading-relaxed">
-             Dashboard initialized. Use the secure gateway to manage sovereign assets.
-           </p>
+      <main className="max-w-7xl mx-auto p-6 md:p-10">
+        {/* Protocol Stats Bar */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+          {[
+            { label: "Total Value Locked", value: "$42.8M", change: "+12%" },
+            { label: "Active Investors", value: "1,204", change: "+5%" },
+            { label: "Avg. Sovereign Yield", value: "6.4%", change: "Stable" },
+            { label: "Assets Tokenized", value: "14", change: "+2" },
+          ].map((stat, i) => (
+            <div key={i} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+              <div className="flex items-baseline gap-2 mt-2">
+                <p className="text-2xl font-bold text-[#1a4d2e]">{stat.value}</p>
+                <span className="text-xs text-emerald-600 font-medium">{stat.change}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Marketplace (Left 2/3) */}
+          <div className="lg:col-span-2 space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-slate-800">Primary Marketplace</h2>
+              <button className="text-sm font-semibold text-[#1a4d2e]">Filter Assets</button>
+            </div>
+            
+            {assets.map((asset) => (
+              <div key={asset.id} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-green-50 rounded-2xl flex items-center justify-center text-[#1a4d2e] font-bold text-xl">
+                    {asset.name[0]}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-lg">{asset.name}</h3>
+                    <p className="text-sm text-slate-400">Maturity: {asset.maturity} • Rating: {asset.rating}</p>
+                  </div>
+                </div>
+                <div className="flex gap-8 items-center w-full md:w-auto justify-between md:justify-end">
+                  <div className="text-right">
+                    <p className="text-xs font-bold text-slate-400 uppercase">Yield</p>
+                    <p className="text-xl font-bold text-emerald-600">{asset.yield}</p>
+                  </div>
+                  <button className="bg-[#1a4d2e] text-white px-6 py-2.5 rounded-xl font-bold text-sm hover:bg-[#24633d]">
+                    Invest
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Side Panel: Portfolio (Right 1/3) */}
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-slate-800">Your Portfolio</h2>
+            <div className="bg-[#1a4d2e] p-8 rounded-[2rem] text-white shadow-xl shadow-green-900/10">
+              <p className="text-sm opacity-80 font-medium">Total Balance</p>
+              <p className="text-4xl font-bold mt-1">$0.00</p>
+              <div className="mt-8 pt-8 border-t border-white/10 flex justify-between">
+                <div>
+                  <p className="text-[10px] uppercase opacity-60 font-bold tracking-widest">Active Stakes</p>
+                  <p className="font-bold">0 Assets</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] uppercase opacity-60 font-bold tracking-widest">Monthly Yield</p>
+                  <p className="font-bold">$0.00</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white p-6 rounded-3xl border border-dashed border-slate-200 text-center py-10">
+              <p className="text-slate-400 text-sm">No assets detected. <br/>Connect wallet to view holdings.</p>
+            </div>
+          </div>
         </div>
       </main>
-
-      <footer className="mt-32 pb-12 text-slate-300 text-xs tracking-[0.4em] uppercase font-medium">
-        Earthspan Protocol • Built on Solana
-      </footer>
     </div>
   );
 }
